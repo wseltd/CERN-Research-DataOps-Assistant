@@ -1,0 +1,122 @@
+[
+  {
+    "id": "Q01",
+    "question": "Which frozen CMS Run 2 NanoAOD collision dataset should I start with for dimuon studies?",
+    "expected_intent": "dataset_discovery",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q02",
+    "question": "What frozen MC dataset is paired for Run 2 NanoAOD guidance?",
+    "expected_intent": "dataset_discovery",
+    "required_record_ids": [35671]
+  },
+  {
+    "id": "Q03",
+    "question": "Show provenance for the collision and MC datasets in this assistant.",
+    "expected_intent": "provenance",
+    "required_record_ids": [30522, 35671]
+  },
+  {
+    "id": "Q04",
+    "question": "Do I need the validated JSON list for the 2016 collision data?",
+    "expected_intent": "validated_json",
+    "required_record_ids": [14220, 30522]
+  },
+  {
+    "id": "Q05",
+    "question": "Give me the DOI and citation context for the frozen collision record.",
+    "expected_intent": "doi_citation",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q06",
+    "question": "How should I cite the MC record in this MVP?",
+    "expected_intent": "doi_citation",
+    "required_record_ids": [35671]
+  },
+  {
+    "id": "Q07",
+    "question": "What license applies to CERN Open Data records and metadata here?",
+    "expected_intent": "license",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q08",
+    "question": "What should I know about terms of use caveats before analysis?",
+    "expected_intent": "license",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q09",
+    "question": "Provide Docker startup guidance for this CMS NanoAOD workflow.",
+    "expected_intent": "docker_environment",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q10",
+    "question": "Can this be run without CMSSW using CMS Docker images?",
+    "expected_intent": "docker_environment",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q11",
+    "question": "Generate deterministic cernopendata-client metadata commands for frozen records.",
+    "expected_intent": "client_command",
+    "required_record_ids": [30522, 35671, 14220]
+  },
+  {
+    "id": "Q12",
+    "question": "How do I get file locations for the collision record with xrootd protocol?",
+    "expected_intent": "xrootd_access",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q13",
+    "question": "Give an XRootD access recipe that avoids full dataset download.",
+    "expected_intent": "xrootd_access",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q14",
+    "question": "What deterministic three-file subset process is used for the dimuon demo?",
+    "expected_intent": "dimuon_demo",
+    "required_record_ids": [30522, 14220]
+  },
+  {
+    "id": "Q15",
+    "question": "Summarize the dimuon invariant-mass demo path end to end.",
+    "expected_intent": "dimuon_demo",
+    "required_record_ids": [30522, 35671, 14220]
+  },
+  {
+    "id": "Q16",
+    "question": "What are the key official documentation sources used by this assistant?",
+    "expected_intent": "docs_discovery",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q17",
+    "question": "Which source supports cernopendata-client filter-range usage?",
+    "expected_intent": "client_command",
+    "required_record_ids": [30522]
+  },
+  {
+    "id": "Q18",
+    "question": "How do provenance and validated JSON connect in this frozen scope?",
+    "expected_intent": "validated_json",
+    "required_record_ids": [30522, 14220]
+  },
+  {
+    "id": "Q19",
+    "question": "Recommend datasets for a controlled CMS Run 2 NanoAOD starter workflow.",
+    "expected_intent": "dataset_discovery",
+    "required_record_ids": [30522, 35671]
+  },
+  {
+    "id": "Q20",
+    "question": "Return a structured answer with commands and caveats for access setup.",
+    "expected_intent": "general_assistant",
+    "required_record_ids": [30522]
+  }
+]

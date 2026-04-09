@@ -1,0 +1,70 @@
+[
+  {
+    "recid": 30522,
+    "record_url": "https://opendata.cern.ch/record/30522",
+    "title": "DoubleMuon primary dataset in NANOAOD format from RunG of 2016",
+    "dataset_path": "/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD",
+    "modality": "collision",
+    "experiment": "CMS",
+    "center_of_mass": "13TeV",
+    "year_recorded": 2016,
+    "year_published": 2024,
+    "run_range": "278820-280385",
+    "doi": "10.7483/OPENDATA.CMS.ZQS3.LGLP",
+    "events": 45235604,
+    "files": 29,
+    "size": "39.3 GiB",
+    "license": "CC0-1.0",
+    "requires_validated_json_recid": 14220,
+    "recommended_images": [
+      "gitlab-registry.cern.ch/cms-cloud/root-vnc",
+      "gitlab-registry.cern.ch/cms-cloud/python-vnc"
+    ],
+    "evidence": [
+      "Record 30522 is a CMS Run 2016G DoubleMuon NanoAOD collision dataset.",
+      "Record 30522 is released with DOI 10.7483/OPENDATA.CMS.ZQS3.LGLP.",
+      "NanoAOD analysis does not require CMSSW and can use ROOT/Python tools.",
+      "Validated runs must be applied for analyses that use this collision dataset."
+    ]
+  },
+  {
+    "recid": 35671,
+    "record_url": "https://opendata.cern.ch/record/35671",
+    "title": "DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format",
+    "dataset_path": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "modality": "mc",
+    "experiment": "CMS",
+    "center_of_mass": "13TeV",
+    "year_recorded": 2016,
+    "year_published": 2024,
+    "doi": "10.7483/OPENDATA.CMS.CRNB.POY1",
+    "license": "CC0-1.0",
+    "recommended_images": [
+      "gitlab-registry.cern.ch/cms-cloud/root-vnc",
+      "gitlab-registry.cern.ch/cms-cloud/python-vnc"
+    ],
+    "evidence": [
+      "Record 35671 is the frozen CMS Run 2 NanoAODSIM Monte Carlo companion dataset.",
+      "Record 35671 is released with DOI 10.7483/OPENDATA.CMS.CRNB.POY1.",
+      "Record 35671 follows the same NanoAOD analysis model as CMS Run 2 NanoAOD collision data."
+    ]
+  },
+  {
+    "recid": 14220,
+    "record_url": "https://opendata.cern.ch/record/14220",
+    "title": "CMS list of validated runs Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+    "dataset_path": "Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+    "modality": "validated_json",
+    "experiment": "CMS",
+    "center_of_mass": "13TeV",
+    "year_recorded": 2016,
+    "year_published": 2023,
+    "doi": null,
+    "license": "CC0-1.0",
+    "evidence": [
+      "Record 14220 is the validated JSON run/lumisection list for 2016 CMS collision data quality.",
+      "Record 14220 states that good luminosity sections should be processed.",
+      "For collision analyses tied to record 30522, this validated JSON list is required metadata context."
+    ]
+  }
+]

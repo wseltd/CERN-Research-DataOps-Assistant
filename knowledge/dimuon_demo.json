@@ -1,0 +1,19 @@
+{
+  "demo_id": "cms_run2_nanoaod_dimuon_3file",
+  "title": "Deterministic dimuon invariant-mass demo over a three-file subset",
+  "dataset_recid": 30522,
+  "mc_recid": 35671,
+  "validated_json_recid": 14220,
+  "subset_strategy": {
+    "method": "cernopendata-client filter-range",
+    "range": "1-3",
+    "description": "Use filter-range 1-3 to constrain processing to a deterministic three-file subset."
+  },
+  "steps": [
+    "Lookup dataset metadata and confirm DOI/citation context.",
+    "Fetch XRootD file locations and keep a deterministic first three-file subset.",
+    "Apply validated JSON context (record 14220) to collision processing assumptions.",
+    "Run a dimuon selection and compute invariant mass histogram for the subset.",
+    "Report caveat that this subset is for deterministic demonstration, not full-precision measurement."
+  ]
+}

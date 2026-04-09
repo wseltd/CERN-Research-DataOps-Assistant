@@ -1,0 +1,14 @@
+# Python runtime caches
+__pycache__/
+
+# Local virtual environment
+.venv/
+*.egg-info/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage*
+htmlcov/
+
+# Local-first runtime data
+data/

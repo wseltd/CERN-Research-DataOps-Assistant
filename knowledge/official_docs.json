@@ -1,0 +1,40 @@
+[
+  {
+    "doc_id": "terms_of_use",
+    "title": "CERN Open Data Terms of Use",
+    "url": "https://opendata.cern.ch/docs/terms-of-use",
+    "evidence": [
+      "The CERN Open Data Portal terms state that metadata and datasets are made available under CC0 waiver terms.",
+      "The terms state that content is provided as-is and users should review applicable license conditions for non-dataset content."
+    ]
+  },
+  {
+    "doc_id": "cms_nanoaod_getting_started",
+    "title": "CMS NanoAOD Getting Started",
+    "url": "https://opendata.cern.ch/docs/cms-getting-started-nanoaod",
+    "evidence": [
+      "CMS NanoAOD datasets can be analysed with common ROOT and Python workflows.",
+      "NanoAOD analysis does not require CMSSW for the analysis stage.",
+      "The guide references XRootD access patterns and cernopendata-client usage in practical workflows."
+    ]
+  },
+  {
+    "doc_id": "cms_docker_guide",
+    "title": "Running CMS analysis code using Docker",
+    "url": "https://opendata.cern.ch/docs/cms-guide-docker",
+    "evidence": [
+      "The CMS Docker guide recommends cms-cloud container images for local analysis workflows.",
+      "The guide documents container startup patterns exposing VNC and notebook ports for analysis sessions."
+    ]
+  },
+  {
+    "doc_id": "cernopendata_client_docs",
+    "title": "cernopendata-client documentation",
+    "url": "https://cernopendata-client.readthedocs.io/en/latest/usage.html",
+    "evidence": [
+      "The cernopendata-client command set includes get-metadata, get-file-locations, and download-files.",
+      "The client supports selecting records by recid or DOI and supports xrootd protocol access.",
+      "download-files supports deterministic filter-range selection for bounded subsets."
+    ]
+  }
+]

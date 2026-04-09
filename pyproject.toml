@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cern-research-dataops-assistant"
+version = "0.1.0"
+description = "Local-first assistant for CERN research DataOps workflows."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "platformdirs==4.3.6",
+]
+
+[project.scripts]
+cern-dataops = "cern_research_dataops_assistant:main"
+
+[project.optional-dependencies]
+test = [
+  "pytest==8.3.5",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["cern_research_dataops_assistant", "exit_codes", "cern_open_data_mvp"]
