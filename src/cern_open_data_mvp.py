@@ -494,6 +494,28 @@ def _build_command_catalog(
         for doc in normalized_docs
         if isinstance(doc, dict) and isinstance(doc.get("doc_id"), str) and isinstance(doc.get("url"), str)
     }
+    doc_passages_by_id: dict[tuple[str, str], dict[str, str]] = {}
+    for doc in normalized_docs:
+        if not isinstance(doc, dict):
+            continue
+        doc_id = doc.get("doc_id")
+        doc_url = doc.get("url")
+        passages = doc.get("passages")
+        if not isinstance(doc_id, str) or not isinstance(doc_url, str) or not isinstance(passages, list):
+            continue
+        for passage in passages:
+            if not isinstance(passage, dict):
+                continue
+            passage_id = passage.get("passage_id")
+            section = passage.get("section")
+            text = passage.get("text")
+            if not isinstance(passage_id, str) or not isinstance(section, str) or not isinstance(text, str):
+                continue
+            doc_passages_by_id[(doc_id, passage_id)] = {
+                "url": doc_url,
+                "section": section,
+                "text": text,
+            }
 
     collision_doi = _deep_get(collision, "identity.doi")
     mc_doi = _deep_get(mc, "identity.doi")
@@ -666,13 +688,20 @@ def _build_command_catalog(
             elif origin["type"] == "doc_passage":
                 doc_id = str(origin["doc_id"])
                 passage_id = str(origin["passage_id"])
+                passage = doc_passages_by_id.get((doc_id, passage_id))
+                if passage is None:
+                    raise ValueError(
+                        "Command catalog doc passage origin could not be resolved for "
+                        f"doc_id='{doc_id}', passage_id='{passage_id}'."
+                    )
                 origins.append(
                     {
                         "source_type": "doc_passage",
                         "source_id": f"doc:{doc_id}",
-                        "url": doc_url_by_id.get(doc_id),
+                        "url": passage.get("url", doc_url_by_id.get(doc_id)),
                         "locator": passage_id,
-                        "quote": passage_id,
+                        "quote": passage["text"],
+                        "section": passage["section"],
                     }
                 )
 
@@ -1039,6 +1068,7 @@ def _append_doc_evidence(evidence: list[dict[str, Any]], passages: list[dict[str
                 "source_id": f"doc:{passage.get('doc_id')}",
                 "url": passage.get("url"),
                 "locator": passage.get("passage_id"),
+                "section": passage.get("section"),
                 "claim": f"{passage.get('title')}::{passage.get('section')}",
                 "quote": passage.get("text"),
             }

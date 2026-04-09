@@ -175,6 +175,73 @@ def test_docs_retrieval_adds_official_doc_passage_evidence(tmp_path: Path) -> No
     assert any("opendata.cern.ch/docs" in item["url"] or "readthedocs.io" in item["url"] for item in doc_evidence)
 
 
+def test_command_catalog_doc_origins_store_real_passage_quotes(tmp_path: Path) -> None:
+    module = _load_module()
+    seed_dir = tmp_path / "seed"
+    module.seed_frozen_inputs(seed_dir)
+
+    command_catalog = json.loads((seed_dir / "command_catalog.json").read_text(encoding="utf-8"))
+    doc_origins = [
+        origin
+        for command in command_catalog
+        for origin in command.get("origins", [])
+        if isinstance(origin, dict) and origin.get("source_type") == "doc_passage"
+    ]
+
+    assert doc_origins
+    for origin in doc_origins:
+        quote = origin.get("quote")
+        locator = origin.get("locator")
+        assert isinstance(quote, str)
+        assert quote.strip()
+        assert " " in quote
+        assert quote != locator
+        assert ":" in str(locator)
+        assert quote != str(origin.get("source_id", "")).split("doc:")[-1] + ":" + str(locator).split(":")[-1]
+        assert isinstance(origin.get("section"), str)
+        assert origin["section"].strip()
+
+
+def test_command_attribution_in_ask_contains_real_doc_quotes(tmp_path: Path) -> None:
+    module = _load_module()
+    seed_dir = tmp_path / "seed"
+    module.seed_frozen_inputs(seed_dir)
+
+    response = module.build_structured_response(
+        "Give me XRootD access commands without downloading everything.",
+        seed_dir,
+    )
+
+    command_attribution = response["access_recipe"]["command_attribution"]
+    doc_origins = [
+        origin
+        for command in command_attribution
+        for origin in command.get("origins", [])
+        if isinstance(origin, dict) and origin.get("source_type") == "doc_passage"
+    ]
+
+    assert doc_origins
+    for origin in doc_origins:
+        quote = origin.get("quote")
+        locator = origin.get("locator")
+        assert isinstance(quote, str)
+        assert quote.strip()
+        assert " " in quote
+        assert quote != locator
+        assert isinstance(origin.get("url"), str)
+        assert "http" in origin["url"]
+
+
+def test_readme_states_frozen_local_curated_assets_and_no_live_fetch() -> None:
+    readme_text = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
+    lowered = readme_text.lower()
+
+    assert "frozen local curated source assets" in lowered
+    assert "no live cern api calls are performed during assistant responses" in lowered
+    assert "no live documentation fetching is performed during assistant responses" in lowered
+    assert "live ingestion" not in lowered
+
+
 def test_evaluation_suite_is_exactly_20_questions_and_runs(tmp_path: Path) -> None:
     module = _load_module()
     seed_dir = tmp_path / "seed"

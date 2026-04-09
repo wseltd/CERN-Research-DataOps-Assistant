@@ -72,11 +72,13 @@ The CERN assistant path is centered in `src/cern_open_data_mvp.py` and remains d
 - CLI wiring:
   - `src/cern_research_dataops_assistant.py`
 
+These source assets are frozen local curated representations derived from official CERN records and official documentation URLs listed below.
+
 The older generic local JSONL ingest/query machinery still exists for backwards compatibility but is secondary to the CERN assistant flow.
 
 ## Ingestion Flow
 
-`assistant seed` reads frozen source assets and writes normalized deterministic artifacts:
+`assistant seed` reads frozen local curated source assets and writes normalized deterministic artifacts:
 
 - `records.json`: normalized record metadata with field-level provenance maps
 - `docs.json`: normalized docs corpus with passage groups
@@ -94,7 +96,7 @@ The older generic local JSONL ingest/query machinery still exists for backwards 
 
 1. classify intent with explicit keyword rules
 2. select recommended frozen records by intent
-3. retrieve relevant docs passages from `docs_passage_index.json` using deterministic keyword scoring
+3. retrieve relevant docs passages from `docs_passage_index.json` (built from frozen local docs assets) using deterministic keyword scoring
 4. assemble structured output with auditable evidence entries:
    - `source_type` (`record_field` or `doc_passage`)
    - `source_id`
@@ -105,6 +107,7 @@ The older generic local JSONL ingest/query machinery still exists for backwards 
 5. attach deterministic command templates and command-level source attribution
 
 The assistant does not generate freehand shell commands from open-ended LLM output.
+No live CERN API fetch or live documentation fetch is performed during `assistant ask`.
 
 ## Structured Output Contract
 
@@ -153,6 +156,7 @@ Official source URLs used in this frozen MVP:
 ## Limitations
 
 - No live CERN API calls are performed during assistant responses; this repository works from frozen local assets.
+- No live documentation fetching is performed during assistant responses; passage retrieval is over the frozen local docs corpus.
 - No hosted deployment path is provided.
 - No remote services integration is implemented by this repository itself.
 - No cloud/services runtime is included.
