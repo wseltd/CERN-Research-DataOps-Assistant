@@ -63,14 +63,11 @@ def test_map_exception_to_exit_code_never_returns_ok_for_exceptions() -> None:
     assert all(code != module.ExitCode.OK for code in mapped_codes)
 
 
-def test_app_module_exposes_exit_code_type_and_mapping_function() -> None:
+def test_app_module_exposes_exit_code_type() -> None:
     module = _load_module(APP_MODULE_PATH, "app_exit_code_exports_under_test")
 
-    code = module.map_exception_to_exit_code(ValueError("bad input"))
-
     assert hasattr(module, "ExitCode")
-    assert isinstance(code, int)
-    assert code == module.ExitCode.INVALID_INPUT
+    assert issubclass(module.ExitCode, int)
 
 
 def test_run_with_exit_handling_maps_unhandled_exception_to_nonzero_exit(monkeypatch) -> None:

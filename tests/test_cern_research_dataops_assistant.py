@@ -1096,6 +1096,8 @@ def test_query_filters_when_range_and_exact_conflict_then_returns_validation_err
     with pytest.raises(ValueError, match="expected YYYY-MM-DD"):
         module.query(repo_dir, date="2026-01-01..2026-01-31")
 
+    assert list(module.read_records(repo_dir)) == []
+
 
 def test_query_filters_when_unknown_filter_key_then_returns_invalid_input_error(
     tmp_path: Path,
@@ -1107,6 +1109,8 @@ def test_query_filters_when_unknown_filter_key_then_returns_invalid_input_error(
     with pytest.raises(TypeError):
         module.query(repo_dir, unknown_filter="muon")
 
+    assert list(module.read_records(repo_dir)) == []
+
 
 def test_query_filters_when_filter_value_type_is_invalid_then_returns_invalid_input_error(
     tmp_path: Path,
@@ -1117,6 +1121,8 @@ def test_query_filters_when_filter_value_type_is_invalid_then_returns_invalid_in
 
     with pytest.raises(TypeError, match="Invalid value for 'date'"):
         module.query(repo_dir, date=123)
+
+    assert list(module.read_records(repo_dir)) == []
 
 
 def test_cli_when_status_command_invoked_then_routes_and_exits_zero(

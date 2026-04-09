@@ -97,11 +97,6 @@ def _load_assistant_module() -> Any:
 _ASSISTANT_MODULE = _load_assistant_module()
 
 
-def map_exception_to_exit_code(exc: BaseException) -> ExitCode:
-    """Map one exception instance to a deterministic process exit code."""
-    return _EXIT_CODES_MODULE.map_exception_to_exit_code(exc)
-
-
 class _CountRangeStats(tuple):
     """Tuple-like summary result with optional key-based access.
 
@@ -452,6 +447,20 @@ def build_parser(
     )
     dataset_list_parser.set_defaults(command_id=COMMAND_ID_DATASET_LIST)
     register_summary_subcommand(command_groups)
+
+    ingest_parser = command_groups.add_parser(
+        COMMAND_GROUP_INGEST,
+        help="Ingest raw records into the local repository.",
+    )
+    ingest_parser.add_argument(
+        "repo_dir",
+        help="Repository directory containing records.jsonl.",
+    )
+    ingest_parser.add_argument(
+        "raw_records",
+        help="JSON array of raw records to ingest.",
+    )
+    ingest_parser.set_defaults(command_id=COMMAND_ID_INGEST)
 
     assistant_parser = command_groups.add_parser(
         COMMAND_GROUP_ASSISTANT,
@@ -1104,6 +1113,8 @@ def main(argv: collections.abc.Sequence[str] | None = None) -> int:
         return run_assistant_eval_command(args)
     if args.command_id == COMMAND_ID_ASSISTANT_DEMO:
         return run_assistant_demo_command(args)
+    if args.command_id == COMMAND_ID_INGEST:
+        return ingest_command(args)
 
     config = load_app_config(args.config)
     if args.command_id == COMMAND_ID_CONFIG_SHOW:
@@ -1122,4 +1133,4 @@ def run_with_exit_handling(argv: collections.abc.Sequence[str] | None = None) ->
         return int(main(argv))
     except BaseException as exc:
         LOGGER.warning("Unhandled exception during CLI execution: %s", exc)
-        return int(map_exception_to_exit_code(exc))
+        return int(_EXIT_CODES_MODULE.map_exception_to_exit_code(exc))
