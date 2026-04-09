@@ -1,0 +1,100 @@
+[
+  {
+    "doc_id": "terms_of_use",
+    "passages": [
+      {
+        "passage_id": "terms_of_use:p1",
+        "section": "License scope",
+        "text": "CERN Open Data terms state that metadata and datasets are provided under CC0 waiver terms.",
+        "keywords": ["license", "cc0", "metadata", "datasets"]
+      },
+      {
+        "passage_id": "terms_of_use:p2",
+        "section": "Non-dataset content",
+        "text": "Other content can have per-item licenses and users should check the license shown on each page.",
+        "keywords": ["license", "software", "terms", "content"]
+      },
+      {
+        "passage_id": "terms_of_use:p3",
+        "section": "Disclaimer",
+        "text": "Content is provided as-is and portal operators do not provide endorsement of downstream analyses.",
+        "keywords": ["disclaimer", "endorsement", "caveat"]
+      }
+    ]
+  },
+  {
+    "doc_id": "cms_nanoaod_getting_started",
+    "passages": [
+      {
+        "passage_id": "cms_nanoaod_getting_started:p1",
+        "section": "NanoAOD analysis model",
+        "text": "NanoAOD can be analyzed with common ROOT and Python tools and does not require CMSSW for analysis in this workflow.",
+        "keywords": ["nanoaod", "python", "root", "cmssw", "analysis"]
+      },
+      {
+        "passage_id": "cms_nanoaod_getting_started:p2",
+        "section": "Validated JSON requirement",
+        "text": "Collision NanoAOD workflows must apply validated run or lumisection JSON files linked from the dataset records.",
+        "keywords": ["validated", "json", "run", "lumisection", "collision"]
+      },
+      {
+        "passage_id": "cms_nanoaod_getting_started:p3",
+        "section": "XRootD and local caching",
+        "text": "The guide demonstrates both remote root:// access and xrdcp local copy to improve processing stability for larger files.",
+        "keywords": ["xrootd", "root://", "xrdcp", "download", "subset"]
+      },
+      {
+        "passage_id": "cms_nanoaod_getting_started:p4",
+        "section": "NanoAOD event fields",
+        "text": "NanoAOD event data include run and luminosityBlock fields which can be used when applying validated JSON filtering.",
+        "keywords": ["run", "luminosityBlock", "filter", "json", "events"]
+      }
+    ]
+  },
+  {
+    "doc_id": "cms_docker_guide",
+    "passages": [
+      {
+        "passage_id": "cms_docker_guide:p1",
+        "section": "Docker-first environment",
+        "text": "The CMS Docker guide provides cmscloud or cms-cloud images for reproducible analysis sessions with mapped ports.",
+        "keywords": ["docker", "container", "environment", "ports"]
+      },
+      {
+        "passage_id": "cms_docker_guide:p2",
+        "section": "Python container contents",
+        "text": "The Python analysis image includes awkward, uproot, and jupyterlab, making it suitable for NanoAOD workflows without CMSSW.",
+        "keywords": ["python-vnc", "awkward", "uproot", "jupyterlab", "cmssw"]
+      },
+      {
+        "passage_id": "cms_docker_guide:p3",
+        "section": "Tag stability",
+        "text": "Examples often use latest tags, but reproducible workflows should pin immutable image digests.",
+        "keywords": ["latest", "digest", "reproducible", "pinning"]
+      }
+    ]
+  },
+  {
+    "doc_id": "cernopendata_client_docs",
+    "passages": [
+      {
+        "passage_id": "cernopendata_client_docs:p1",
+        "section": "Metadata retrieval",
+        "text": "cernopendata-client supports deterministic metadata lookup with get-metadata using recid or DOI.",
+        "keywords": ["get-metadata", "recid", "doi", "metadata"]
+      },
+      {
+        "passage_id": "cernopendata_client_docs:p2",
+        "section": "File location lookup",
+        "text": "get-file-locations with --protocol xrootd returns file endpoints for streaming access.",
+        "keywords": ["get-file-locations", "xrootd", "protocol", "streaming"]
+      },
+      {
+        "passage_id": "cernopendata_client_docs:p3",
+        "section": "Bounded subset execution",
+        "text": "download-files supports filter-range so deterministic subsets can be used for bounded demos.",
+        "keywords": ["download-files", "filter-range", "subset", "deterministic"]
+      }
+    ]
+  }
+]
