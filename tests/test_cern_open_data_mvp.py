@@ -47,12 +47,22 @@ def test_seed_frozen_inputs_writes_deterministic_structured_files(tmp_path: Path
     assert second["seed_version"] == module.SEED_VERSION
     assert sorted(first["frozen_record_ids"]) == [14220, 30522, 35671]
     assert manifest_payload["seed_version"] == module.SEED_VERSION
-    assert sorted(manifest_payload["files"].keys()) == [
+    assert sorted(manifest_payload["generated_files"].keys()) == [
+        "command_catalog",
         "command_templates",
+        "demo_linkage",
         "dimuon_demo",
         "docs",
+        "docs_passage_index",
         "records",
         "seed_process",
+    ]
+    assert sorted(manifest_payload["source_assets"].keys()) == [
+        "demo",
+        "doc_passages",
+        "docs",
+        "record_details",
+        "records",
     ]
 
 
@@ -77,6 +87,45 @@ def test_build_structured_response_returns_required_schema_and_templates(tmp_pat
     assert "docker run --rm -it" in response["environment"]["docker_startup"]
 
 
+def test_evidence_entries_are_auditable_and_source_typed(tmp_path: Path) -> None:
+    module = _load_module()
+    seed_dir = tmp_path / "seed"
+    module.seed_frozen_inputs(seed_dir)
+
+    response = module.build_structured_response(
+        "Show provenance and command evidence for this CMS NanoAOD assistant.",
+        seed_dir,
+    )
+
+    evidence = response["evidence"]
+    assert evidence
+    for item in evidence:
+        assert item["source_type"] in {"record_field", "doc_passage"}
+        assert isinstance(item["source_id"], str)
+        assert isinstance(item["url"], str)
+        assert isinstance(item["locator"], str)
+        assert isinstance(item["claim"], str)
+    assert any(item["source_type"] == "record_field" for item in evidence)
+    assert any(item["source_type"] == "doc_passage" for item in evidence)
+
+
+def test_doi_and_citation_response_contains_frozen_doi_values(tmp_path: Path) -> None:
+    module = _load_module()
+    seed_dir = tmp_path / "seed"
+    module.seed_frozen_inputs(seed_dir)
+
+    response = module.build_structured_response(
+        "Give me DOI and citation details for collision and MC records.",
+        seed_dir,
+    )
+
+    citations = response["license_and_citation"]["citations"]
+    dois = {entry["recid"]: entry["doi"] for entry in citations if isinstance(entry, dict)}
+
+    assert dois[30522] == "10.7483/OPENDATA.CMS.ZQS3.LGLP"
+    assert dois[35671] == "10.7483/OPENDATA.CMS.CRNB.POY1"
+
+
 def test_validated_json_question_references_record_14220(tmp_path: Path) -> None:
     module = _load_module()
     seed_dir = tmp_path / "seed"
@@ -92,6 +141,38 @@ def test_validated_json_question_references_record_14220(tmp_path: Path) -> None
     assert response["intent"] == "validated_json"
     assert 14220 in recids
     assert response["provenance"]["validated_json_record"]["recid"] == 14220
+    assert "14220" in json.dumps(response["provenance"], ensure_ascii=False)
+
+
+def test_xrootd_response_is_bounded_and_not_full_download_default(tmp_path: Path) -> None:
+    module = _load_module()
+    seed_dir = tmp_path / "seed"
+    module.seed_frozen_inputs(seed_dir)
+
+    response = module.build_structured_response(
+        "Give me XRootD access commands without downloading everything.",
+        seed_dir,
+    )
+
+    assert response["intent"] == "xrootd_access"
+    assert any("--protocol xrootd" in command for command in response["access_recipe"]["xrootd_access"])
+    assert any("--filter-range 1-3" in command for command in response["access_recipe"]["xrootd_access"])
+    assert any("full dataset" in caveat.lower() for caveat in response["caveats"])
+
+
+def test_docs_retrieval_adds_official_doc_passage_evidence(tmp_path: Path) -> None:
+    module = _load_module()
+    seed_dir = tmp_path / "seed"
+    module.seed_frozen_inputs(seed_dir)
+
+    response = module.build_structured_response(
+        "What official docs support Docker and cernopendata-client usage?",
+        seed_dir,
+    )
+
+    doc_evidence = [item for item in response["evidence"] if item["source_type"] == "doc_passage"]
+    assert doc_evidence
+    assert any("opendata.cern.ch/docs" in item["url"] or "readthedocs.io" in item["url"] for item in doc_evidence)
 
 
 def test_evaluation_suite_is_exactly_20_questions_and_runs(tmp_path: Path) -> None:
@@ -105,6 +186,7 @@ def test_evaluation_suite_is_exactly_20_questions_and_runs(tmp_path: Path) -> No
     assert len(questions) == 20
     assert result["total_questions"] == 20
     assert result["passed"] + result["failed"] == 20
+    assert result["failed"] == 0
 
 
 def test_dimuon_demo_is_deterministic_three_file_path(tmp_path: Path) -> None:

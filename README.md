@@ -59,32 +59,56 @@ cern-dataops assistant demo --seed-dir data/cms_run2_nanoaod_mvp
 
 ## Architecture
 
-The assistant is implemented as a metadata-first layer over frozen local JSON assets:
+The CERN assistant path is centered in `src/cern_open_data_mvp.py` and remains deterministic.
 
-- `knowledge/frozen_records.json`: frozen CERN record metadata (`30522`, `35671`, `14220`)
-- `knowledge/official_docs.json`: official docs corpus ingestion source
-- `knowledge/dimuon_demo.json`: deterministic three-file dimuon demo specification
-- `evaluations/cms_run2_nanoaod_eval_questions.json`: deterministic 20-question evaluation set
-- `src/cern_open_data_mvp.py`: deterministic ingestion, intent classification, evidence assembly, command template generation
-- `src/cern_research_dataops_assistant.py`: CLI wiring and command dispatch
+- Source assets (`knowledge/`):
+  - `frozen_records.json`
+  - `frozen_record_details.json`
+  - `official_docs.json`
+  - `official_docs_passages.json`
+  - `dimuon_demo.json`
+- Evaluation suite:
+  - `evaluations/cms_run2_nanoaod_eval_questions.json`
+- CLI wiring:
+  - `src/cern_research_dataops_assistant.py`
 
-The seeded output is structured and deterministic (`records.json`, `docs.json`, `command_templates.json`, `dimuon_demo.json`, `seed_process.json`, `manifest.json`) to support reproducible local runs.
+The older generic local JSONL ingest/query machinery still exists for backwards compatibility but is secondary to the CERN assistant flow.
 
-## Sources
+## Ingestion Flow
 
-Official source URLs used in this MVP:
+`assistant seed` reads frozen source assets and writes normalized deterministic artifacts:
 
-- https://opendata.cern.ch/record/30522
-- https://opendata.cern.ch/record/35671
-- https://opendata.cern.ch/record/14220
-- https://opendata.cern.ch/docs/terms-of-use
-- https://opendata.cern.ch/docs/cms-getting-started-nanoaod
-- https://opendata.cern.ch/docs/cms-guide-docker
-- https://cernopendata-client.readthedocs.io/en/latest/usage.html
+- `records.json`: normalized record metadata with field-level provenance maps
+- `docs.json`: normalized docs corpus with passage groups
+- `docs_passage_index.json`: deterministic passage-level retrieval index
+- `command_templates.json`: deterministic command families (legacy-compatible format)
+- `command_catalog.json`: command templates plus explicit source attribution
+- `dimuon_demo.json`: frozen deterministic dimuon path
+- `demo_linkage.json`: explicit linkage to records `30522`, `35671`, `14220`
+- `seed_process.json`: seed scope, source hashes, deterministic process metadata
+- `manifest.json`: deterministic hashes for source assets and generated artifacts
+
+## Retrieval and Answer Assembly
+
+`assistant ask` uses deterministic intent routing and metadata-first assembly:
+
+1. classify intent with explicit keyword rules
+2. select recommended frozen records by intent
+3. retrieve relevant docs passages from `docs_passage_index.json` using deterministic keyword scoring
+4. assemble structured output with auditable evidence entries:
+   - `source_type` (`record_field` or `doc_passage`)
+   - `source_id`
+   - `url`
+   - `locator`
+   - `claim`
+   - optional `quote`
+5. attach deterministic command templates and command-level source attribution
+
+The assistant does not generate freehand shell commands from open-ended LLM output.
 
 ## Structured Output Contract
 
-`assistant ask` returns JSON with all required fields:
+`assistant ask` preserves the required top-level contract:
 
 - `answer`
 - `intent`
@@ -96,32 +120,39 @@ Official source URLs used in this MVP:
 - `evidence`
 - `caveats`
 
-Command templates are deterministic and metadata-derived for:
-
-- cernopendata-client metadata lookup
-- file-location lookup
-- XRootD access
-- Docker startup
-- validated JSON metadata lookup
-
 ## Demo Flow
 
 Deterministic dimuon path (three-file subset):
 
-1. Seed frozen records/docs with `assistant seed`.
-2. Resolve metadata/provenance for record `30522` and validated JSON record `14220`.
-3. Generate XRootD subset commands using deterministic `filter-range 1-3`.
-4. Use Docker startup guidance for local analysis environment.
-5. Treat this as a bounded demonstration path, not a full-statistics analysis.
+1. seed frozen assets with `assistant seed`
+2. anchor collision path to record `30522`
+3. anchor MC reference to record `35671`
+4. enforce validated JSON linkage to record `14220`
+5. keep bounded subset strategy (`filter-range 1-3`)
+
+This demo path is intentionally bounded and deterministic.
+
+## Sources
+
+Official source URLs used in this frozen MVP:
+
+- https://opendata.cern.ch/record/30522
+- https://opendata.cern.ch/record/35671
+- https://opendata.cern.ch/record/14220
+- https://opendata.cern.ch/docs/terms-of-use
+- https://opendata.cern.ch/docs/cms-getting-started-nanoaod
+- https://opendata.cern.ch/docs/cms-guide-docker
+- https://cernopendata-client.readthedocs.io/en/latest/usage.html
 
 ## Trade-offs
 
-- Frozen scope improves determinism and governance at the cost of breadth.
-- Metadata-first responses prioritize provenance and command reproducibility over broad conversational flexibility.
-- Deterministic rule-based intent mapping is explicit and stable, but narrower than open-ended semantic retrieval.
+- Frozen scope improves determinism and auditability at the cost of dataset breadth.
+- Deterministic keyword retrieval is inspectable and stable, but narrower than semantic retrieval systems.
+- The assistant prioritizes metadata-grounded command generation over conversational flexibility.
 
 ## Limitations
 
+- No live CERN API calls are performed during assistant responses; this repository works from frozen local assets.
 - No hosted deployment path is provided.
 - No remote services integration is implemented by this repository itself.
 - No cloud/services runtime is included.

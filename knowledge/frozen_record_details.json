@@ -1,0 +1,161 @@
+{
+  "30522": {
+    "record": {
+      "url": "https://opendata.cern.ch/record/30522",
+      "json_export": "https://opendata.cern.ch/record/30522/export/json",
+      "api_record": "https://opendata.cern.ch/api/records/30522",
+      "doi": "10.7483/OPENDATA.CMS.ZQS3.LGLP",
+      "title": "DoubleMuon primary dataset in NANOAOD format from RunG of 2016 (/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD)",
+      "data_recorded": 2016,
+      "data_published": 2024,
+      "run_range": "278820-280385"
+    },
+    "dataset_characteristics": {
+      "events": 45235604,
+      "files": 29,
+      "total_size": "39.3 GiB",
+      "file_format": "ROOT TTree (NanoAOD)"
+    },
+    "validated_runs_requirement": {
+      "required_record": 14220,
+      "also_linked_record": 14221,
+      "requirement_statement": "Collision NanoAOD analyses must apply validated run/lumisection JSON metadata.",
+      "validated_json_file_url": "https://opendata.cern.ch/record/14220/files/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt"
+    },
+    "processing_provenance": {
+      "steps": [
+        {
+          "step": "NANO",
+          "cmssw_release": "CMSSW_10_6_26",
+          "global_tag": "106X_dataRun2_v35",
+          "configuration_record": {
+            "recid": 30482,
+            "url": "https://opendata.cern.ch/record/30482"
+          }
+        },
+        {
+          "step": "PAT",
+          "cmssw_release": "CMSSW_10_6_25",
+          "global_tag": "106X_dataRun2_v35",
+          "configuration_record": {
+            "recid": 30465,
+            "url": "https://opendata.cern.ch/record/30465"
+          }
+        },
+        {
+          "step": "RECO",
+          "cmssw_release": "CMSSW_10_6_8_patch1",
+          "global_tag": "106X_dataRun2_v27",
+          "configuration_record": {
+            "recid": 30489,
+            "url": "https://opendata.cern.ch/record/30489"
+          }
+        }
+      ]
+    },
+    "container_recommendation": {
+      "recommended_images": [
+        "gitlab-registry.cern.ch/cms-cloud/python-vnc",
+        "gitlab-registry.cern.ch/cms-cloud/root-vnc"
+      ],
+      "reproducible_python_image": "cmscloud/python-vnc@sha256:04b5a8b22852ee9e11ad5e63844c09c2824b51121772e76473bc3072b2566321"
+    },
+    "license_and_citation": {
+      "license": "Creative Commons Zero v1.0 Universal (CC0)",
+      "cite_as": "CMS Collaboration (2024). DoubleMuon primary dataset in NANOAOD format from RunG of 2016 (/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD). CERN Open Data Portal. DOI:10.7483/OPENDATA.CMS.ZQS3.LGLP",
+      "disclaimer_note": "CERN/CMS do not endorse works produced using these data; DOI citation is requested."
+    }
+  },
+  "35671": {
+    "record": {
+      "url": "https://opendata.cern.ch/record/35671",
+      "json_export": "https://opendata.cern.ch/record/35671/export/json",
+      "api_record": "https://opendata.cern.ch/api/records/35671",
+      "doi": "10.7483/OPENDATA.CMS.CRNB.POY1",
+      "title": "Simulated dataset DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data",
+      "data_recorded": 2016,
+      "data_published": 2024,
+      "physics_category": "Standard Model Physics / Drell-Yan"
+    },
+    "dataset_characteristics": {
+      "events": 82448537,
+      "files": 61,
+      "total_size": "90.6 GiB",
+      "file_format": "ROOT TTree (NanoAODSIM)"
+    },
+    "processing_provenance": {
+      "steps": [
+        {
+          "step": "LHE GEN",
+          "cmssw_release": "CMSSW_10_6_17_patch1",
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/f6c04017726eb527f21116f12da9e198.configFile.py"
+        },
+        {
+          "step": "SIM",
+          "cmssw_release": "CMSSW_10_6_17_patch1",
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/3a0d355c94411f19483a541753bfad33.configFile.py"
+        },
+        {
+          "step": "DIGI2RAW",
+          "cmssw_release": "CMSSW_10_6_17_patch1",
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/a9ddbd3eba50b1e59e5a776d04f23787.configFile.py"
+        },
+        {
+          "step": "HLT",
+          "cmssw_release": "CMSSW_8_0_33_UL",
+          "global_tag": "80X_mcRun2_asymptotic_2016_TrancheIV_v6",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/9ce11276cd6c3f502dfc3079748c6539.configFile.py"
+        },
+        {
+          "step": "RECO",
+          "cmssw_release": "CMSSW_10_6_17_patch1",
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/d3562005bd1d2556b0a9e7748be6066d.configFile.py"
+        },
+        {
+          "step": "PAT",
+          "cmssw_release": "CMSSW_10_6_25",
+          "global_tag": "106X_mcRun2_asymptotic_v17",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/c8dc83abb237e289eae3cfefea871409.configFile.py"
+        },
+        {
+          "step": "NANO",
+          "cmssw_release": "CMSSW_10_6_26",
+          "global_tag": "106X_mcRun2_asymptotic_v17",
+          "config_file_url": "https://opendata.cern.ch/eos/opendata/cms/configuration-files/MonteCarlo2016/1e6ff0d7760d6ebc6b36d8e7565fae2e.configFile.py"
+        }
+      ]
+    },
+    "container_recommendation": {
+      "recommended_images": [
+        "gitlab-registry.cern.ch/cms-cloud/python-vnc",
+        "gitlab-registry.cern.ch/cms-cloud/root-vnc"
+      ],
+      "reproducible_python_image": "cmscloud/python-vnc@sha256:04b5a8b22852ee9e11ad5e63844c09c2824b51121772e76473bc3072b2566321"
+    },
+    "license_and_citation": {
+      "license": "Creative Commons Zero v1.0 Universal (CC0)",
+      "cite_as": "CMS Collaboration (2024). Simulated dataset DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data. CERN Open Data Portal. DOI:10.7483/OPENDATA.CMS.CRNB.POY1",
+      "disclaimer_note": "CERN/CMS do not endorse works produced using these data; DOI citation is requested."
+    }
+  },
+  "14220": {
+    "record": {
+      "url": "https://opendata.cern.ch/record/14220",
+      "json_export": "https://opendata.cern.ch/record/14220/export/json",
+      "api_record": "https://opendata.cern.ch/api/records/14220",
+      "title": "CMS list of validated runs Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+      "data_recorded": 2016,
+      "data_published": 2023
+    },
+    "validated_json_file_url": "https://opendata.cern.ch/record/14220/files/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+    "validation_statement": "Validated JSON describes run/lumisection ranges considered good and must be applied in collision analyses.",
+    "luminosity_fields_for_filtering": [
+      "run",
+      "luminosityBlock"
+    ]
+  }
+}
